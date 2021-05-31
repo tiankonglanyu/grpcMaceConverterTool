@@ -1,0 +1,30 @@
+// gprc 实现 mace 转换工具
+syntax = "proto3";
+
+
+//package convert;
+// In Go, the package is used as the Go package name, unless you explicitly provide an option go_package in your .proto file
+option go_package = "/convert";  // 这个配置 会优先 package 使用, 帮你在当前目录新建 convert 目录，并且把 这个目录下 package  设置为 convert
+
+message Client{
+    // client message
+    string path = 1;  // yml 文件路径
+    string dest_path = 2;  // 目标路径  默认 zip
+
+}
+
+
+message Server{
+    // server message
+    string stdout = 1;  // 单条日志消息
+    string stderr = 2;  // 单条日志消息
+    bool is_over = 3;  // 是否结束， 好像用不到
+
+}
+
+
+service Convert{
+    // 转化函数， 服务端流
+    rpc Mace(Client) returns (Server){ };  // 调用 return 通知客户端结束， 客户端是 Recv 函数
+
+}
